@@ -1,0 +1,197 @@
+﻿@model HappinessForm.Models.SurgicalInfo
+
+@using GridMvc.Html
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    ViewBag.Title = "Details";
+}
+<div class="card-box">
+  
+    
+    <div class="comment">
+        <h2 style="margin-left:40px">Details</h2>
+      
+        <div class="comment-body" style="background-color:white">
+            <div class="comment-text">
+                <div> <h3 href="#" title="">Patient's Bio-Data</h3></div>
+                <div class="form-group clearfix">
+                    
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Patient Name:</label>
+                        @Html.DisplayFor(x => x.PatientName, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Hospital No:</label>
+                        @Html.DisplayFor(x => x.hospitalNo, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Gender:</label>
+                        @Html.DisplayFor(x => x.Gender, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Age:</label>
+                        @Html.DisplayFor(x => x.Age, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+    <div class="comment">
+     
+        <div class="comment-body" style="background-color:white">
+            <div class="comment-text">
+                <div> <h3 href="#" title="">Doctors Med. Report</h3></div>
+                <div class="form-group clearfix">
+                    
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Doctor In charge: </label>
+                        Dr.
+                        @Html.DisplayFor(x => x.LastName, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                        @Html.DisplayFor(x => x.FirstName, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Diagnosis:</label>
+                        @Html.DisplayFor(x => x.Diagnosistext, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Coexisting Med. Conditions:</label>
+                        @Html.DisplayFor(x => x.CoexistingMedConditions, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Procedure:</label>
+                        @Html.DisplayFor(x => x.ProcedureText, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    
+                </div>
+                <div class="form-group clearfix">
+
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Special Requirement: </label>
+                        @Html.DisplayFor(x => x.SpecialRequirement, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Current Medication:</label>
+                        @Html.DisplayFor(x => x.CurrentMedication, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Admission Date:</label>
+                        @Html.DisplayFor(x => x.AddmisionDate, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                    <div class="col-lg-3">
+                        <label style="font-size:small">Procedure Date:</label>
+                        @Html.DisplayFor(x => x.ProcedureDate, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                 
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="comment" >
+
+        <div class="comment-body" style="background-color:white">
+            <div class="comment-text">
+                <div> <h3 href="#" title="">Investigations</h3></div>
+                <div class="form-group clearfix">
+                    <div class="col-md-2 pull-right">
+                        <a href="~/Billing/BillinProcess" type="submit" class="btn btn-default waves-effect waves-light btn-sm">
+                            Add Investigation
+                        </a>
+                    </div>
+@Html.Grid(Model.ListofLabTest).Columns(columns =>
+
+{
+
+    columns.Add(col => col.Id, true);
+    columns.Add(col => col.InvestigationName).Titled("Investigation Required");
+    columns.Add(col => col.Unit).Titled("Unit");
+    columns.Add(col => col.Cost).Titled("Cost");
+    columns.Add()
+            .Titled("")
+            .SetWidth(10)
+            .Filterable(true)
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(c => Html.ActionLink("Delete", "Delete", "Home", new { id = c.Id }, null)
+            .ToHtmlString());
+}).WithPaging(15).Sortable(true)
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="comment" >
+
+        <div class="comment-body" style="background-color:white">
+            <div class="comment-text">
+                <div> <h3 href="#" title="">Facilities and Services</h3></div>
+                <div class="form-group clearfix">
+
+                    <div class="col-lg-4">
+                        <label style="font-size:small">Bed Category:</label>
+                        @Html.DropDownListFor(x => x.BedID, Model.Beds, "Select BedCategory", new { @class = "form-control select2 input-sm col-sm-3", required = "" })
+                    </div>
+                    <div class="col-lg-4">
+                        <label style="font-size:small">Bed Cost:</label>
+                        @Html.DisplayFor(x => x.BedCost, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                    <div class="col-lg-4">
+                        <label style="font-size:small">Bed Days:</label>
+                        @Html.DisplayFor(x => x.Beddays, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    
+                </div>
+
+                <div class="form-group clearfix">
+
+                    <div class="col-lg-6">
+                        <label style="font-size:small">Surgery Category:</label>
+                        @Html.DisplayFor(x => x.surgeryclassID, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    <div class="col-lg-6">
+                        <label style="font-size:small">Surgery Cost:</label>
+                        @Html.DisplayFor(x => x.surgeryCost, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                    
+
+                </div>
+
+                <div class="form-group clearfix">
+
+                    <div class="col-lg-6">
+                        <label style="font-size:small">Anathesia Category:</label>
+                        @Html.DisplayFor(x => x.AnathesiaListId, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    <div class="col-lg-6">
+                        <label style="font-size:small">Anathesia Cost:</label>
+                        @Html.DisplayFor(x => x.AnathesiaCost, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                   
+
+                </div>
+                <div class="form-group clearfix">
+
+                    <div class="col-lg-6">
+                        <label style="font-size:small">Theatre Category:</label>
+                        @Html.DisplayFor(x => x.TheatreListId, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                    </div>
+                    <div class="col-lg-6">
+                        <label style="font-size:small">Theatre Cost:</label>
+                        @Html.DisplayFor(x => x.TheatreCost, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                    </div>
+                  
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,276 @@
+﻿@model HappinessForm.Models.SurgicalInfo
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    //Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="col-md-2 pull-right">
+    <a href="~/Billing/BillinProcess" type="submit" class="btn btn-default waves-effect waves-light btn-sm">
+        Billing Process
+    </a>
+</div>
+<div class="ajax">
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "" }))
+    {
+        <div class="form-group">
+            
+            <div class="col-lg-3">
+               
+                @Html.TextBoxFor(x => x.hospitalNo, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "", required = "" })
+                @Html.ValidationMessageFor(m => m.hospitalNo, "", new { @class = "text-danger  " })
+                
+            </div >
+            
+            <div>
+         
+                <button type = "submit" class="btn btn-default waves-effect waves-light btn-sm" onclick="myFunction()">
+                    Filter
+                </button>
+               
+            </div>
+            <div id="load" style="color:red;font-style:italic" class="col-lg-3"></div>
+
+            <div id="redirect2" style="color:red;font-style:italic" class="col-lg-3"></div>
+        </div>
+    }
+    
+    </div>
+  
+
+    <div class="card-box">
+        @*<h4 class="m-t-0 header-title"><b>Vertical Steps Example</b></h4>
+            <p class="text-muted m-b-30 font-13">
+                Use the button classes on an <code>&lt;a&gt;</code>, <code>&lt;button&gt;</code>, or <code>&lt;input&gt;</code> element.
+            </p>*@
+
+        @using (Html.BeginForm("PostingResult", "Home", FormMethod.Post, new { @id = "wizard-vertical" }))
+        {
+            if (TempData["error"] != null)
+            {
+                <div class="col-lg-12"style="color:red">@TempData["error"].ToString() </div>
+            }
+            if (TempData["error2"] != null)
+            {
+                <div class="col-lg-12" style="color:red">@TempData["error2"].ToString() </div>
+            }
+            
+            <h3>Sur. Operation Form 1</h3>
+                    <section>
+                        <div class="card-box">
+
+                            <div class="form-group clearfix">
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Hospital No</label>
+                                    @Html.TextBoxFor(x => x.hospitalNo, new { @placeholder = "Hospital No*", @class = "required form-control input-sm ", @id = "h", required = "", })
+                                    @Html.ValidationMessageFor(m => m.hospitalNo, "", new { @class = "text-danger  " })
+                                </div>
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Patient Name*</label>
+                                    @Html.TextBoxFor(x => x.PatientName, new { @placeholder = "Patient Name*", @class = "form-control  input-sm required", @id = "name", required = "" })
+                                    @Html.ValidationMessageFor(m => m.PatientName, "", new { @class = "text-danger  " })
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                             
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Gender*</label>
+                                    @Html.DropDownListFor(m => m.Gender, Model.GenderList, "Select Gender", new { @class = "form-control input-sm col-sm-3", required = "" })
+                                  
+                                </div>
+                                @*</div>*@
+                                @*<div class="form-group clearfix">*@
+                                
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Age*</label>
+                                    @Html.TextBoxFor(x => x.Age, new { @placeholder = "Age*", @class = "required form-control input-sm ", @id = "age", required = "", type = "number" })
+                                    @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger  " })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group clearfix">
+                                @*<label class="col-lg-3 control-label " for="password1">Consultant In Charge *</label>*@
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Consultant InCharge*</label>
+                                    @Html.DropDownListFor(m => m.Doctor, Model.Doctors, "Select Consultant InCharge", new { @class = "form-control select2 input-sm col-sm-3", required = "" })
+                                 
+                                </div>
+
+                                @*<label class="col-lg-3 control-label " for="password1">Consultant In Charge *</label>*@
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Diagnosis*</label>
+                                    @Html.TextAreaFor(x => x.Diagnosistext,  new { @placeholder = "Diagnosis", @class = "form-control input-sm col-sm-3" , required = "" })
+                                   @Html.ValidationMessageFor(m => m.Diagnosistext, "", new { @class = "text-danger  " })
+                                </div>
+
+                            </div>
+
+                            <div class="form-group clearfix">
+                               
+                                <div class="col-lg-6">
+                                    @*<label class="col-lg-3 control-label " for="confirm1">Admission Date *</label>*@
+                                    <label style="font-size:xx-small">Admission Date *</label>
+                                    @Html.TextBoxFor(x => x.AddmisionDate, new { @placeholder = "Admission Date", @class = "datepicker form-control  input-sm", @id = "addmin", required = "" })
+                                    @Html.ValidationMessageFor(m => m.AddmisionDate, "", new { @class = "text-danger  " })
+                                </div>
+
+                                @*<label class="col-lg-3 control-label " for="confirm1">Procedure Date *</label>*@
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Procedure Date *</label>
+                                    @Html.TextBoxFor(x => x.ProcedureDate, new { @placeholder = "Procedure Date", @class = "datepicker  form-control  input-sm", @id = "proc", required = "" })
+                                    @Html.ValidationMessageFor(m => m.ProcedureDate, "", new { @class = "text-danger  " })
+                                </div>
+                            </div>
+                            </div>
+                        </section>
+                        <h3>Sur. Operation Form 2</h3>
+                        <section>
+                        <div class="card-box">
+                            <div class="form-group clearfix">
+
+
+
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Procedure*</label>
+                                    @Html.DropDownListFor(x => x.Procedure, Model.Procedures, "Select Procedure", new { @class = "form-control select2 input-sm col-sm-3", required = "" })
+                                    @*<input id="confirm1" name="confirm" type="text" class="required form-control">*@
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Allotted Time By Theatre</label>
+                                    @Html.TextBoxFor(x => x.AllottedTime, new { @placeholder = "Allotted Time By Theatre", @class = "form-control input-daterange-timepicker", @id = "", required = "", type = "text", name = "daterange", value = "06/01/2018 - 06/07/2018" })
+                                    @Html.ValidationMessageFor(m => m.AllottedTime, "", new { @class = "text-danger  " })
+                                </div>
+                                @*<label class="col-lg-2 control-label " for="confirm1">Coexisting Medical Conditions *</label>*@
+                                
+                            </div>
+                           <div>
+                               <div class="col-lg-6">
+                                   <label style="font-size:xx-small">Coexisting Medical Conditions</label>
+                                   @Html.TextAreaFor(x => x.CoexistingMedConditions, new { @placeholder = "Coexisting Medical Conditions", @class = "form-control  input-sm", @id = "", required = "" })
+                                   @Html.ValidationMessageFor(m => m.CoexistingMedConditions, "", new { @class = "text-danger  " })
+                               </div>
+                           </div>
+                            <div class="form-group clearfix">
+                                @*<label class="col-lg-2 control-label " for="confirm1">Current Medication*</label>*@
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Current Medication</label>
+                                    @Html.TextBoxFor(x => x.CurrentMedication, new { @placeholder = "Current Medication", @class = "form-control  input-sm", @id = "", required = "" })
+                                    @Html.ValidationMessageFor(m => m.CurrentMedication, "", new { @class = "text-danger  " })
+                                </div>
+
+
+                                @*<label class="col-lg-2 control-label " for="confirm1">Special Requirement *</label>*@
+                                <div class="col-lg-6">
+                                    <label style="font-size:xx-small">Special Requirement</label>
+                                    @Html.TextBoxFor(x => x.SpecialRequirement, new { @placeholder = "Special Requirement", @class = "form-control  input-sm", @id = "", required = "" })
+                                   @Html.ValidationMessageFor(m => m.SpecialRequirement, "", new { @class = "text-danger  " })
+                                </div>
+                            </div>
+
+                           
+
+                            <div class="form-group clearfix">
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+                    </section>
+                    <h3>Bill Estimate</h3>
+                    <section>
+                        <div class="card-box">
+                            
+                                <div class="form-group clearfix">
+                                    <fieldset>
+                                        <legend style="font-size:small">Room Info</legend>
+                                        <div class="col-sm-4">
+                                            <label style="font-size:xx-small">Bed Category</label>
+                                            @Html.DropDownListFor(x => x.BedID, Model.Beds, "Select BedCategory", new { @class = "form-control select2 input-sm col-sm-3", required = "" })
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="font-size:xx-small">Bed Cost</label>
+                                            @Html.TextBoxFor(model => model.BedCost, new { @placeholder = "Bed Cost", @class = "form-control  input-sm ", @id = "", type="number", step = "0.01" })
+                                            @Html.ValidationMessageFor(m => m.BedCost, "", new { @class = "text-danger  " })
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="font-size:xx-small">Bed Days</label>
+                                            @Html.TextBoxFor(model => model.Beddays, new { @placeholder = "Bed Days", @class = "form-control  input-sm ", @id = "", type = "number" })
+                                            @Html.ValidationMessageFor(m => m.BedCost, "", new { @class = "text-danger  " })
+                                        </div>
+                                    </fieldset>
+                              </div>
+                            
+                            <div class="form-group clearfix">
+                                <fieldset>
+                                    <legend style="font-size:small">Surgery Category</legend>
+                                    <div class="col-sm-6">
+                                        <label style="font-size:xx-small">Surgery Category</label>
+                                        @Html.DropDownListFor(x => x.surgeryclassID, Model.surgeryClasses, "Select Surgery Category", new { @class = "form-control select2 input-sm col-sm-3", required = "" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label style="font-size:xx-small">Surgery Cost</label>
+                                        @Html.TextBoxFor(model => model.surgeryCost, new { @placeholder = "Surgery Cost", @class = "form-control  input-sm ", @id = "", type = "number", step = "0.01" })
+                                        @Html.ValidationMessageFor(m => m.surgeryCost, "", new { @class = "text-danger  " })
+                                    </div>
+                                </fieldset>
+
+                            </div>
+                            <div class="form-group clearfix">
+                                <fieldset>
+                                    <legend style="font-size:small">Anathesia Category</legend>
+                                    <div class="col-sm-6">
+                                        <label style="font-size:xx-small">Anathesia Category"</label>
+                                        @Html.DropDownListFor(x => x.AnathesiaListId, Model.AnathesiaList, "Select Anathesia Category", new { @class = "form-control input-sm col-sm-3", required = "" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label style="font-size:xx-small">Anathesia Cost</label>
+                                        @Html.TextBoxFor(model => model.AnathesiaCost, new { @placeholder = "Anathesia Cost", @class = "form-control  input-sm ", @id = "", type = "number", step = "0.01" })
+                                        @Html.ValidationMessageFor(m => m.AnathesiaCost, "", new { @class = "text-danger  " })
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <fieldset>
+                                    <legend style="font-size:small">Thearter Category</legend>
+                                    <div class="col-sm-6">
+                                        <label style="font-size:xx-small">Theatre Category</label>
+                                        @Html.DropDownListFor(x => x.TheatreListId, Model.TheatreList, "Select Theatre Category", new { @class = "form-control input-sm col-sm-3", required = "" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label style="font-size:xx-small">Theatre Cost*</label>
+                                        @Html.TextBoxFor(model => model.TheatreCost, new { @placeholder = "Theatre Cost", @class = "form-control  input-sm ", @id = "", type = "number", step = "0.01" })
+                                        @Html.ValidationMessageFor(m => m.TheatreCost, "", new { @class = "text-danger  " })
+                                    </div>
+                                </fieldset>
+
+                            </div>
+                  
+                            
+                            
+                           
+                     </div>
+                        <div class="form-group newcorp-style">
+                            <div class="col-md-3 pull-right">
+                              
+                                <input type="submit" value="Proceed" class="btn btn-primary btn-block ipm" data-perm="CustomersCreate" />
+                            </div>
+                        </div>
+                    </section>
+
+                   
+                    @*<h3>Finish</h3>
+                        <section>
+                            <div class="form-group clearfix">
+                                <div class="col-lg-12">
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="checkbox-v" type="checkbox">
+                                        <label for="checkbox-v"> I agree with the Terms and Conditions. </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>*@
+        }
+        </div>

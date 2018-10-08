@@ -1,0 +1,69 @@
+﻿@model HappinessForm.Models.SurgicalInfo
+@using GridMvc.Html
+@{
+    ViewBag.Title = "BillinProcess";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+
+
+<div class="col-md-8 col-md-offset-2" style="background-color:white">
+
+    @using (Html.BeginForm("BillinProcess", "Billing", FormMethod.Post, new { @class = "card-box", autocomplete = "off" }))
+    {
+
+        <div class="form-group">
+
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.Start, new { @class = "col-sm-3" })
+                @Html.TextBoxFor(m => m.Start, new { @class = "datepicker  form-control input-sm col-sm-3", @id = "start" })
+                @*<span class="input-group-addon bg-custom b-0 text-white"><i class="icon-calender"></i></span>*@
+            </div>
+
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.End, new { @class = "col-sm-3" })
+                @Html.TextBoxFor(m => m.End, new { @class = "datepicker  form-control input-sm col-sm-3", @id = "end" })
+                @*<span class="input-group-addon bg-custom b-0 text-white"><i class="icon-calender"></i></span>*@
+            </div>
+
+            <br />
+
+            <button type="submit" class="btn btn-default waves-effect waves-light btn-sm">
+                Filter
+            </button>
+
+        </div>
+    }
+
+
+
+    @Html.Grid(Model.ListOfEntries).Columns(columns =>
+
+{
+
+
+    columns.Add(col => col.hospitalNo).Titled("Hospital Number");
+    columns.Add(col => col.PatientName).Titled("Patient Name");
+    columns.Add(col => col.ProcedureText).Titled("Procedure").Encoded(false).Sanitized(false);
+    columns.Add(col => col.ProcedureDate).Titled("Procedure Date").Encoded(false).Sanitized(false);
+    columns.Add()
+                .Titled("")
+                .SetWidth(10)
+                .Filterable(true)
+                .Sanitized(false)
+                .Encoded(false)
+                .RenderValueAs(c => Html.ActionLink("Details", "Details", "Billing", new { id = c.MainId }, null)
+                .ToHtmlString());
+    columns.Add()
+                .Titled("")
+                .SetWidth(10)
+                .Filterable(true)
+                .Sanitized(false)
+                .Encoded(false)
+                .RenderValueAs(c => Html.ActionLink("Edit", "Edit", "Home", new { id = c.MainId }, null)
+                .ToHtmlString());
+
+
+}).WithPaging(15).Sortable(true)
+</div>
+    
